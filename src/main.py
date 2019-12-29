@@ -6,7 +6,7 @@ from selenium.webdriver.firefox.options import Options
 def scrap(**kwargs):
     try:
         options = Options()
-        options.headless = True
+        options.add_argument('-headless')
         driver = webdriver.Firefox(options=options)
         driver.get(kwargs['url'])
         value = driver.find_element_by_xpath(kwargs['xpath']).text
@@ -26,7 +26,6 @@ def scrap(**kwargs):
 
 
 if __name__ == "__main__":
-    forex = forex()
     start_date = datetime.now()
 
     rate_xe = scrap(label="xe", url="http://www.xe.com/currencyconverter/convert/?Amount=1&From=MYR&To=INR", xpath='//*[@id="converterResult"]/div/div/div[2]/span[1]')
