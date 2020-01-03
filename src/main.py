@@ -14,9 +14,10 @@ def scrap(**kwargs):
     except Exception as e:
         print("Exception found: \n", format(e))
         print(f"*not* found the xpath element.")
-    else:
+    finally:
         print(f"found the xpath element, run duration {(datetime.now() - start_time).seconds} seconds.")
-    driver.quit()
+        driver.close()
+        driver.quit()
 
     if kwargs['label'] == 'uae_xchange':
         rate = scrap_string.split()[3]
@@ -41,6 +42,5 @@ if __name__ == "__main__":
     rate_transferwise = scrap(label="transferwise", url="https://transferwise.com/gb/currency-converter/myr-to-inr-rate", xpath='/html/body/main/section/div[2]/div[1]/div/form/div[2]/div[1]/h3/span[3]')
     rate_lotus_remit = scrap(label="lotus_remit", url="https://www.lotusremit.com/Rates.aspx", xpath='//*[@id="gvRates"]/tbody/tr[3]')
 
-    # print(f"{rate_xe}\n{rate_moneymatch}\n{rate_uae}\n{rate_instarem}\n{rate_transferwise}")
     # eremit = scrap1("https://api.eremit.com.my/EremitService.svc/GetExchangeRates")
     print(f'"{sys.argv[0].split("/")[-1]}" script completed successfully. Total run time : {(datetime.now() - start_time_main).seconds}')
