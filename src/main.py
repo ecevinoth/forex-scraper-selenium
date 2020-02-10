@@ -17,7 +17,7 @@ def scrap(agency):
         print("Exception found: \n", format(e))
         print(f"*not* found the xpath element.")
     finally:
-        print(f"found the xpath element, run duration {(datetime.now() - start_time).seconds} seconds.")
+        # print(f"found the xpath element, run duration {(datetime.now() - start_time).seconds} seconds.")
         driver.close()
         driver.quit()
 
@@ -31,11 +31,13 @@ def scrap(agency):
         rate = scrap_string
 
     print(f"{float(rate).__round__(4):2.04f}, {agency['label']}")
+    rates[agency['label']]=float(rate).__round__(4)
     return f"{float(rate).__round__(4):2.04f}, {agency['label']}"
 
 
 if __name__ == "__main__":
     start_time_main = datetime.now()
+    rates = {}
     dictionary = {
         'xe': {'label': "xe",
                'url': "http://www.xe.com/currencyconverter/convert/?Amount=1&From=MYR&To=INR",
@@ -57,6 +59,6 @@ if __name__ == "__main__":
     threads = [threading.Thread(target=scrap, args=(dictionary[agency],)) for agency in dictionary]
     threads_start = [thread.start() for thread in threads]
     threads_join = [thread.join() for thread in threads]
-
+    # print(rates)
     # eremit = scrap1("https://api.eremit.com.my/EremitService.svc/GetExchangeRates")
     print(f'"{sys.argv[0].split("/")[-1]}" script completed successfully. Total run time : {(datetime.now() - start_time_main).seconds}')
