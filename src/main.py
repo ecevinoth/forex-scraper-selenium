@@ -43,4 +43,4 @@ if __name__ == "__main__":
     rate_lotus_remit = scrap(label="lotus_remit", url="https://www.lotusremit.com/Rates.aspx", xpath='//*[@id="gvRates"]/tbody/tr[3]')
 
     # eremit = scrap1("https://api.eremit.com.my/EremitService.svc/GetExchangeRates")
-    print(f'"{sys.argv[0].split("/")[-1]}" script completed successfully. Total run time : {(datetime.now() - start_time_main).seconds}')
+    #print(f'"{sys.argv[0].split("/")[-1]}" script completed successfully. Total run time : {(datetime.now() - start_time_main).seconds}')
