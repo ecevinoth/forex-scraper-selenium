@@ -1,11 +1,11 @@
 #!/bin/env sh
 
 cd "/d/ProgramFiles/GoogleDrive/PythonCode/Project/forex_rate_scarp/src"
-echo "starting forex rate scarper script."
-echo "no input argument"
-echo "command : python D:\ProgramFiles\GoogleDrive\PythonCode\Project/\forex_rate_scarp\src\main.py"
+echo `date` "starting forex rate scarper script."
+echo
 /d/ProgramFiles/Python/Python37/python '/d/ProgramFiles/GoogleDrive/PythonCode/Project/forex_rate_scarp/src/main.py'
-echo "script completed"
+echo
+echo `date` "script completed"
 echo "press enter to exit."
 read junk
 
