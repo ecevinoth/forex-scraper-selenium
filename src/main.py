@@ -1,5 +1,6 @@
 import os
 import sys
+import sqlite3
 import threading
 from datetime import datetime
 
@@ -34,6 +35,18 @@ def scrap(agency):
     rates[agency['label']]=float(rate).__round__(4)
     return f"{float(rate).__round__(4):2.04f}, {agency['label']}"
 
+def write_to_db(rates):
+    conn = sqlite3.connect("rates.db")
+    c = conn.cursor()
+    # c.execute('''create table rates(rate double, agency text not null);''')
+    for agency, rate in rates.items():
+        c.execute('''insert into rates values(?, ?)''', (rate, agency))
+    c.execute('''select * from rates;''')
+    rows = c.fetchall()
+    for row in rows:
+        print(row)
+    conn.commit()
+    conn.close()
 
 if __name__ == "__main__":
     start_time_main = datetime.now()
@@ -59,6 +72,6 @@ if __name__ == "__main__":
     threads = [threading.Thread(target=scrap, args=(dictionary[agency],)) for agency in dictionary]
     threads_start = [thread.start() for thread in threads]
     threads_join = [thread.join() for thread in threads]
-    # print(rates)
+    write_to_db(rates)
     # eremit = scrap1("https://api.eremit.com.my/EremitService.svc/GetExchangeRates")
     #print(f'"{sys.argv[0].split("/")[-1]}" script completed successfully. Total run time : {(datetime.now() - start_time_main).seconds}')
